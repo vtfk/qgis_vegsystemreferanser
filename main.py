@@ -54,6 +54,7 @@ for j in df['Km_til']:
     y.append(j)
 
 index = 0
+removed_ref = 0
 vegsystemreferanse = ''
 
 # Listene blir sammenlignet og sjekket mot hverandre for å se om intervallet er stigende.
@@ -64,7 +65,11 @@ for (i, j) in zip(x, y):
         vegsystemreferanse = df['Vegsystemreferanse'].drop([index])
         print(df['Vegsystemreferanse'][index],
             'Ikke gyldig vegsystemreferanse. Intervall skal være stigend, eks: m0-100')
+        removed_ref += 1
     index += 1
+    
+if removed_ref == 0:
+  vegsystemreferanse = df['Vegsystemreferanse']
 
 # Her gjøres spørringen mot nvdb.
 v.filter({'vegsystemreferanse': vegsystemreferanse})
